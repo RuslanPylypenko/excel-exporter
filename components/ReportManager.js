@@ -1,22 +1,24 @@
 const XlsxPopulate = require('xlsx-populate');
 
-const getFilePostFix = function (){
+const getFilePostFix = function () {
     const date = new Date();
     return date.getFullYear() + "." +
-        (date.getMonth()+1) + "." +
+        (date.getMonth() + 1) + "." +
         date.getDate() + "." +
         date.getHours() + "_" +
         date.getMinutes() + "_" +
         date.getSeconds()
 }
 
-const cellLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'K', 'L']
+const cellLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+                        'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AK', 'AL',
+                        'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ']
 
 
 class ReportManager {
 
-    constructor(type) {
-        this.filename = `./${type}_${getFilePostFix()}.xlsx`;
+    constructor() {
+        this.filename = `./storage/report_${getFilePostFix()}.xlsx`;
 
         XlsxPopulate.fromBlankAsync().then(workbook => {
             return workbook.toFileAsync(filename, {password: "secret"});
@@ -24,33 +26,18 @@ class ReportManager {
     }
 
     parseData(data) {
-        XlsxPopulate.fromFileAsync(this.filename)
+        XlsxPopulate.fromBlankAsync()
             .then(workbook => {
-
                 data.map((item, idx) => {
-                    workbook.sheet("Sheet1").cell("A1").value();
-                })
+                    let letterIdx = 0;
+                    for (const [key, value] of Object.entries(item)) {
+                        workbook.sheet("Sheet1").cell(`${cellLetters[letterIdx]}${(idx + 1)}`).value(value);
+                        letterIdx++;
+                    }
+                });
 
-                const value = workbook.sheet("Sheet1").cell("A1").value();
-
-                // Log the value.
-                console.log(value);
+                workbook.toFileAsync(this.filename, {password: "secret"});
             });
-
-        // XlsxPopulate.fromBlankAsync().then(workbook => {
-        //     body.map((report, index) => {
-        //         index+=1;
-        //         workbook.sheet("Sheet1").cell(`A${index}`).value(report.surname);
-        //         workbook.sheet("Sheet1").cell(`B${index}`).value(report.name);
-        //         workbook.sheet("Sheet1").cell(`C${index}`).value(report.patronymic);
-        //         workbook.sheet("Sheet1").cell(`D${index}`).value(report.passport);
-        //         workbook.sheet("Sheet1").cell(`E${index}`).value(report.phone);
-        //         workbook.sheet("Sheet1").cell(`F${index}`).value(report.email);
-        //         workbook.sheet("Sheet1").cell(`G${index}`).value(report.projects_name);
-        //     })
-        //
-        //  return   workbook.toFileAsync("./test.xlsx", { password: "secret" });
-        // });
     }
 
 
