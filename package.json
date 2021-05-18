@@ -1,0 +1,24 @@
+{
+  "name": "excel-exporter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^9.0.2",
+    "xlsx-populate": "^1.21.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RuslanPylypenko/excel-exporter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RuslanPylypenko/excel-exporter/issues"
+  },
+  "homepage": "https://github.com/RuslanPylypenko/excel-exporter#readme"
+}

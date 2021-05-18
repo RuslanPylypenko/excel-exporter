@@ -1,6 +1,9 @@
 "use strict"
 
+require('dotenv').config()
+
 const http = require('http');
+const PORT = process.env.PORT || 8000;
 
 const reportManager = require('./components/ReportManager');
 
@@ -12,13 +15,11 @@ const server = http.createServer((req, res) => {
     }).on('data', (chunk) => {
         body.push(chunk);
     }).on('end', () => {
-        console.log(Buffer.concat(body).toString());
         const reportData = JSON.parse(Buffer.concat(body).toString());
-
         const ReportManager = new reportManager()
         ReportManager.parseData(reportData);
 
     });
 });
 
-server.listen(8000);
+server.listen(PORT);

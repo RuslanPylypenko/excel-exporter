@@ -18,11 +18,8 @@ const cellLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M',
 class ReportManager {
 
     constructor() {
+        this.password = process.env.FILE_PASSWORD || 'secret';
         this.filename = `./storage/report_${getFilePostFix()}.xlsx`;
-
-        XlsxPopulate.fromBlankAsync().then(workbook => {
-            return workbook.toFileAsync(filename, {password: "secret"});
-        });
     }
 
     parseData(data) {
@@ -36,7 +33,7 @@ class ReportManager {
                     }
                 });
 
-                workbook.toFileAsync(this.filename, {password: "secret"});
+                workbook.toFileAsync(this.filename, {password: this.password});
             });
     }
 
